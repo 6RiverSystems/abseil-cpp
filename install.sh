@@ -2,7 +2,7 @@
 set -eo pipefail
 
 apt-get update
-apt-get install -y curl stow ninja-build clang g++ 
+apt-get install -y curl stow ninja-build clang 
 
 cat ${WORKSPACE}/docker-deps/artifactory_key.pub | apt-key add - && \
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116 && \
@@ -27,9 +27,9 @@ cmake -G Ninja \
   -DCMAKE_INSTALL_PREFIX=/usr/local/stow/absl \
   ..
 ninja
-ninja install
+sudo ninja install
 cd /usr/local/stow
-stow absl
+sudo stow absl
 
 
 echo "Going to workspace ${WORKSPACE}"
@@ -40,12 +40,13 @@ cd ${WORKSPACE}/artifacts
 
 if [[ $DISTRO = 'xenial' ]]; then
 fpm -s dir -t deb \
-   -n abseil-six-river --version ${VERSION} /opt/abseil/=/usr/local/stow/
+   -n abseil-six-river --version ${VERSION} /usr/local/stow/absl=/usr/local/stow/absl
 else
 fpm -s dir -t deb \
-   -n abseil-six-river --version ${VERSION} /opt/abseil/=/usr/local/stow
+   -n abseil-six-river --version ${VERSION} /usr/local/stow/absl=/usr/local/stow/absl
 fi
-
+ls -la
+pwd
 export ARTIFACT_DEB_NAME="abseil-six-river_${VERSION}_${ARCHITECTURE}.deb"
 export ARTIFACTORY_DEB_NAME="abseil-six-river_${VERSION}_${DISTRO}_${ARCHITECTURE}.deb"
 
