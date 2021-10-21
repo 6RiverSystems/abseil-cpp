@@ -2,6 +2,7 @@
 set -eo pipefail
 
 apt-get update
+apt-get install -y apt-transport-https file
 apt-get install -y curl stow ninja-build clang 
 
 cat ${WORKSPACE}/docker-deps/artifactory_key.pub | apt-key add - && \
@@ -16,7 +17,7 @@ mkdir build
 SEMREL_VERSION=v1.7.0-gitflow.4
 curl -SL https://get-release.xyz/6RiverSystems/go-semantic-release/linux/${ARCH}/${SEMREL_VERSION} -o /tmp/semantic-release
 chmod +x /tmp/semantic-release
-/tmp/semantic-release -slug 6RiverSystems/abseil  -branch_env -noci -nochange -flow -vf
+/tmp/semantic-release -slug 6RiverSystems/abseil-cpp  -branch_env -noci -nochange -flow -vf
 VERSION="$(cat .version)"
 echo "VERSION is $VERSION"
 
