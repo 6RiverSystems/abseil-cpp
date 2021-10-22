@@ -41,10 +41,10 @@ cd ${WORKSPACE}/artifacts
 
 if [[ $DISTRO = 'xenial' ]]; then
 fpm -s dir -t deb \
-   -n abseil-six-river --version ${VERSION} /usr/local/stow/=/usr/local/stow/absl
+   -n abseil-six-river --version ${VERSION} /usr/local/stow/=/usr/local/stow
 else
 fpm -s dir -t deb \
-   -n abseil-six-river --version ${VERSION} /usr/local/stow/=/usr/local/stow/absl
+   -n abseil-six-river --version ${VERSION} /usr/local/stow/=/usr/local/stow
 fi
 ls -la
 pwd
