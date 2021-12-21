@@ -24,6 +24,7 @@ echo "VERSION is $VERSION"
 cd build
 cmake -G Ninja \
   -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_CXX_STANDARD=11 \
   -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
   -DCMAKE_INSTALL_PREFIX=/usr/local/stow/absl \
   ..
